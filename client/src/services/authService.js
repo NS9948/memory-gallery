@@ -10,4 +10,9 @@ const loginUser = async (formData) => {
     return response.data 
 }
 
-export {registerUser, loginUser}
+const getCurrentUser = async () => {
+    const response = await api.get("/auth/me")
+    return response.data
+}
+
+export {registerUser, loginUser, getCurrentUser}

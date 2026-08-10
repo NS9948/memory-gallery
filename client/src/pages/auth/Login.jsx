@@ -2,7 +2,8 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import InputField from "../../components/form/InputField"
 import AuthButton from "../../components/form/AuthButton"
-import { loginUser } from "../../../../server/src/services/authService"
+import { loginUser } from "../../services/authService"
+import { saveToken } from "../../utils/storage"
 
 const initialForm = {
     email: "",
@@ -43,7 +44,8 @@ const Login = () => {
         setServerError("");
 
         try {
-            await loginUser();
+            const token = await loginUser(form);
+            saveToken(token)
             setForm(initialForm)
             navigate("/", { replace: true });
         } catch (error) {
