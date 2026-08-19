@@ -36,3 +36,617 @@
     font-family: var(--font-sans);
     overscroll-behavior: none;
   }
+
+  .memory-book {
+    position: relative;
+    display: flex;
+    width: min(90vw, 1000px);
+    aspect-ratio: 1.7 / 1;
+    perspective: 1800px;
+    border-radius: 8px;
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.18),
+        0 8px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.memory-book-float {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.memory-book-entrance {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.memory-book-entrance-book {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.memory-book-page {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 50% 45%,
+            rgba(255, 252, 244, 0.96) 0%,
+            rgba(244, 237, 225, 0.88) 38%,
+            rgba(218, 205, 187, 0.78) 100%
+        ),
+        #e5dbcc;
+}
+
+.memory-book-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 32%,
+            rgba(70, 50, 30, 0.12) 100%
+        );
+    z-index: 0;
+}
+
+.memory-book-page::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    opacity: 0.15;
+    background-image: url("public/textures/pagesTexture.jpg");
+    background-size: 700px;
+    background-repeat: repeat;
+    mix-blend-mode: multiply;
+    z-index: 0;
+}
+
+.memory-page-book {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+}
+
+.memory-page-decoration {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.memory-page-photo {
+    width: 210px;
+    padding: 10px;
+    background: #eee7da;
+    box-shadow:
+        0 16px 30px rgba(55, 42, 28, 0.16),
+        0 4px 8px rgba(55, 42, 28, 0.08);
+}
+
+.memory-page-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    filter:
+        saturate(0.68)
+        contrast(0.94)
+        sepia(0.14);
+    opacity: 0.86;
+}
+
+.memory-page-photo-left {
+    left: 5%;
+    top: 23%;
+    transform: rotate(-8deg);
+}
+
+.memory-page-photo-right {
+    right: 5%;
+    bottom: 20%;
+    transform: rotate(7deg);
+}
+
+.memory-page-note {
+    left: 9%;
+    bottom: 14%;
+    width: 155px;
+    min-height: 95px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(232, 220, 199, 0.9),
+            rgba(216, 201, 177, 0.78)
+        );
+    box-shadow:
+        0 12px 24px rgba(55, 42, 28, 0.12);
+    transform: rotate(-5deg);
+    color: rgba(70, 55, 40, 0.58);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.book-page {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-image: url("public/textures/pagesTexture.jpg");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 45px rgba(70, 50, 30, 0.12);
+    backface-visibility: hidden;
+}
+
+.book-page-left {
+    border-radius: 8px 0 0 8px;
+    transform-origin: right center;
+}
+
+.book-page-right {
+    border-radius: 0 8px 8px 0;
+    transform-origin: left center;
+}
+
+.book-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 250, 235, 0.12),
+            rgba(120, 90, 55, 0.08)
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.book-page::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(90, 65, 35, 0.12);
+    box-shadow:
+        inset 0 0 30px rgba(70, 45, 20, 0.06);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.book-page-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    color: #3f3529;
+}
+
+.memory-book-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    transform: translateX(-50%);
+    background:
+        linear-gradient(
+            to right,
+            rgba(50, 35, 20, 0.04),
+            rgba(50, 35, 20, 0.18),
+            rgba(50, 35, 20, 0.04)
+        );
+    box-shadow:
+        0 0 12px rgba(50, 35, 20, 0.12);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.memory-photo {
+    width: 64%;
+    padding: 10px;
+    background: #f4eee1;
+    box-shadow:
+        0 8px 18px rgba(55, 42, 28, 0.14),
+        0 2px 5px rgba(55, 42, 28, 0.08);
+    transform: rotate(-1.2deg);
+}
+
+.memory-photo-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    filter:
+        saturate(0.88)
+        contrast(0.96)
+        sepia(0.04);
+}
+
+.memory-book-cover-page {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255, 252, 244, 0.95),
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(160, 125, 85, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(130, 95, 60, 0.07),
+            transparent 30%
+        ),
+        #eee7dc;
+}
+
+.memory-book-cover-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(55, 40, 25, 0.08) 100%
+        );
+    z-index: 1;
+}
+
+.memory-book-cover {
+    position: relative;
+    width: min(70vw, 500px);
+    aspect-ratio: 0.72 / 1;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background-image:
+        linear-gradient(
+            rgba(35, 20, 12, 0.18),
+            rgba(35, 20, 12, 0.3)
+        ),
+        url("public/textures/bookTexture.jpg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    box-shadow:
+        14px 22px 35px rgba(35, 25, 18, 0.28),
+        4px 7px 12px rgba(35, 25, 18, 0.18),
+        inset 0 0 35px rgba(20, 12, 7, 0.35);
+    z-index: 5;
+}
+
+.memory-book-cover:hover:not(:disabled) {
+    box-shadow:
+        18px 28px 45px rgba(35, 25, 18, 0.32),
+        5px 8px 15px rgba(35, 25, 18, 0.22),
+        inset 0 0 35px rgba(20, 12, 7, 0.35);
+}
+
+.memory-book-cover:disabled {
+    cursor: default;
+}
+
+.memory-book-cover-border {
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(205, 178, 135, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        inset 0 0 18px rgba(20, 12, 7, 0.2);
+    pointer-events: none;
+}
+
+.memory-book-cover-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    pointer-events: none;
+}
+
+.memory-book-cover-eyebrow {
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(225, 202, 165, 0.78);
+}
+
+.memory-book-cover-title {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #e6d1ad;
+    text-shadow:
+        1px 1px 1px rgba(20, 10, 5, 0.8),
+        0 0 8px rgba(225, 198, 155, 0.12);
+}
+
+.memory-book-cover-divider {
+    width: 70px;
+    height: 1px;
+    margin: 24px 0;
+    background: rgba(205, 178, 135, 0.45);
+}
+
+.memory-book-cover-year {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(225, 202, 165, 0.65);
+}
+
+.memory-cover-decoration {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.memory-cover-photo {
+    width: 190px;
+    padding: 9px;
+    background: #eee7da;
+    box-shadow:
+        0 12px 25px rgba(55, 42, 28, 0.16),
+        0 3px 7px rgba(55, 42, 28, 0.08);
+}
+
+.memory-cover-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    filter:
+        saturate(0.7)
+        contrast(0.92)
+        sepia(0.12);
+    opacity: 0.8;
+}
+
+.memory-cover-photo-left {
+    left: 10%;
+    bottom: 16%;
+    transform: rotate(-9deg);
+}
+
+.memory-cover-photo-right {
+    right: 10%;
+    top: 17%;
+    transform: rotate(7deg);
+}
+
+.memory-cover-note {
+    right: 13%;
+    bottom: 15%;
+    width: 150px;
+    min-height: 90px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(224, 210, 187, 0.72);
+    box-shadow:
+        0 10px 20px rgba(55, 42, 28, 0.1);
+    transform: rotate(-4deg);
+    color: rgba(70, 55, 40, 0.55);
+    font-family: serif;
+    font-size: 13px;
+    font-style: italic;
+    z-index: 2;
+}
+
+.memory-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 252, 244, 0.98),
+            rgba(238, 231, 220, 0.98)
+        );
+    color: #3f3529;
+}
+
+.memory-transition::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 40%,
+            rgba(55, 40, 25, 0.08) 100%
+        );
+}
+
+.memory-transition-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.memory-transition-eyebrow {
+    margin: 0 0 18px;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #756858;
+}
+
+.memory-transition-title {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 400;
+    color: #3f3529;
+}
+
+.memory-transition-divider {
+    height: 1px;
+    margin-top: 28px;
+    background: #9b8b77;
+}
+
+.memory-transition-caption {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-style: italic;
+    color: #756858;
+}
+
+@media (max-width: 1100px) {
+    .memory-page-photo-left {
+        left: 2%;
+    }
+
+    .memory-page-photo-right {
+        right: 2%;
+    }
+
+    .memory-page-note {
+        left: 4%;
+    }
+}
+
+@media (max-width: 900px) {
+    .memory-page-photo {
+        width: 160px;
+    }
+
+    .memory-page-note {
+        width: 130px;
+        min-height: 80px;
+        padding: 16px;
+        font-size: 14px;
+    }
+
+    .memory-cover-photo {
+        width: 150px;
+    }
+
+    .memory-cover-note {
+        width: 125px;
+        min-height: 75px;
+    }
+}
+
+@media (max-width: 700px) {
+    .memory-page-photo-left {
+        left: -45px;
+        top: 12%;
+        transform: rotate(-8deg) scale(0.8);
+    }
+
+    .memory-page-photo-right {
+        right: -45px;
+        bottom: 12%;
+        transform: rotate(7deg) scale(0.8);
+    }
+
+    .memory-page-note {
+        left: -20px;
+        bottom: 8%;
+        transform: rotate(-5deg) scale(0.8);
+    }
+
+    .memory-book {
+        width: 94vw;
+    }
+
+    .memory-cover-photo {
+        width: 120px;
+    }
+
+    .memory-cover-photo-left {
+        left: -25px;
+        bottom: 12%;
+    }
+
+    .memory-cover-photo-right {
+        right: -25px;
+        top: 12%;
+    }
+
+    .memory-cover-note {
+        right: -15px;
+        bottom: 10%;
+        transform: rotate(-4deg) scale(0.8);
+    }
+}
+
+@media (max-width: 550px) {
+    .memory-page-photo-left,
+    .memory-page-photo-right,
+    .memory-page-note {
+        opacity: 0.55;
+    }
+
+    .memory-book-cover {
+        width: min(78vw, 380px);
+    }
+
+    .memory-book-cover-border {
+        inset: 12px;
+    }
+
+    .memory-book-cover-content {
+        padding: 20px;
+    }
+
+    .memory-book-cover-title {
+        font-size: 2rem;
+    }
+
+    .memory-book-cover-divider {
+        margin: 18px 0;
+    }
+}

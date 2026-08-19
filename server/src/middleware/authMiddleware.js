@@ -25,6 +25,13 @@ const authMiddleware = (req,res,next) => {
         const decoded = verifyToken(token)
 
         req.user = decoded
+        console.log("Authorization Header:", authHeader);
+
+const tokenn = authHeader.split(" ")[1];
+console.log("Extracted Token:", tokenn);
+
+const decodedd = verifyToken(token);
+console.log("Decoded:", decodedd);
 
         next();
 

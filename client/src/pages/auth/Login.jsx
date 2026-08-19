@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import InputField from "../../components/form/InputField"
 import AuthButton from "../../components/form/AuthButton"
 import { loginUser } from "../../services/authService"
-import { saveToken } from "../../utils/storage"
+import { useAuth } from "../../context/AuthContext";
 
 const initialForm = {
     email: "",
@@ -16,6 +16,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState({})
     const [serverError, setServerError] = useState("")
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -44,9 +45,12 @@ const Login = () => {
         setServerError("");
 
         try {
-            const token = await loginUser(form);
-            saveToken(token)
-            setForm(initialForm)
+            const { user, token } = await loginUser(form);
+        
+            login(user, token);
+        
+            setForm(initialForm);
+        
             navigate("/", { replace: true });
         } catch (error) {
             const data = error.response?.data;
