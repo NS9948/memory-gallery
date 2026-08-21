@@ -33,19 +33,6 @@ const memorySchema = new Schema(
             type: String,
             trim: true,
         },
-
-        photos: [
-            {
-                type: String,
-            },
-        ],
-
-        videos: [
-            {
-                type: String,
-            },
-        ],
-
         createdBy: {
             type: Schema.Types.ObjectId,
             ref: "User",

@@ -9,8 +9,6 @@ const createMemoryController = async (req,res,next) => {
             mood,
             location,
             song,
-            photos,
-            videos,
         } = req.body
 
         const memory = await createMemory({
@@ -20,8 +18,6 @@ const createMemoryController = async (req,res,next) => {
             mood,
             location,
             song,
-            photos,
-            videos,
             createdBy: req.user.id
         })
 

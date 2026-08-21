@@ -23,13 +23,6 @@ const createMemorySchema = z.object({
         .string()
         .optional(),
 
-    photos: z
-        .array(z.string())
-        .optional(),
-
-    videos: z
-        .array(z.string())
-        .optional()
 });
 
 const updateMemorySchema = z.object({
@@ -58,13 +51,6 @@ const updateMemorySchema = z.object({
         .string()
         .optional(),
 
-    photos: z
-        .array(z.string())
-        .optional(),
-
-    videos: z
-        .array(z.string())
-        .optional()
 })
 
 export {

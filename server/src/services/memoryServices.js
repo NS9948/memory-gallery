@@ -1,4 +1,7 @@
 import Memory from "../models/Memory.js"
+import MemoryMedia from "../models/MemoryMedia.js";
+import Media from "../models/Media.js";
+import { getSignedMediaUrl } from "./s3Services.js";
 
 const createMemory = async({
     title,
@@ -7,8 +10,6 @@ const createMemory = async({
     mood,
     location,
     song,
-    photos,
-    videos,
     createdBy
 }) => {
     try {
@@ -20,8 +21,6 @@ const createMemory = async({
             mood,
             location,
             song,
-            photos,
-            videos,
             createdBy
         })
 
@@ -52,7 +51,36 @@ const getMemory =  async ({userId, memoryId}) => {
             _id: memoryId
         })
 
-        return memory
+        if (!memory) {
+            return null;
+        }
+
+        const memoryMedia = await MemoryMedia.find({
+            memoryId: memory._id
+        });
+        
+        const mediaIds = memoryMedia.map((item) => item.mediaId);
+        
+        const media = await Media.find({
+            _id: { $in: mediaIds },
+            createdBy: userId
+        });
+
+        const mediaWithUrls = await Promise.all(
+            media.map(async (item) => {
+                const url = await getSignedMediaUrl(item.key);
+        
+                return {
+                    ...item.toObject(),
+                    url
+                };
+            })
+        );
+        
+        return {
+            ...memory.toObject(),
+            media: mediaWithUrls
+        };
     } catch (error) {
         throw error
     }
